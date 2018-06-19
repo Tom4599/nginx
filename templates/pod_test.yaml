@@ -10,4 +10,4 @@ spec:
   containers:
   - name: nginxtest
     image: nginx
-    imagePullPolicy: {{ .Values.image.pullPolicy }}
+    imagePullPolicy: {{ .Values.pullPolicy }}
