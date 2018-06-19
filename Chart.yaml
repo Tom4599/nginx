@@ -1,3 +1,4 @@
 apiVersion: v1
-name: odoo
+description: Deploy a Basic wordpress
+name: wordpress
 version: 1
