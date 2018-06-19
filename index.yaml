@@ -1,3 +1,13 @@
 apiVersion: v1
-entries: {}
-generated: 2018-06-19T14:52:30.404588427+02:00
+entries:
+  nginx:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2018-06-19T15:12:00.074466895+02:00
+    description: A Helm chart for Kubernetes
+    digest: f4f2109df41358baa192c9703bee285b8dcc7ea7121aa6130b0c1e569e55e815
+    name: nginx
+    urls:
+    - nginx-0.1.0.tgz
+    version: 0.1.0
+generated: 2018-06-19T15:12:00.073376651+02:00
