@@ -41,7 +41,7 @@ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:tille
 
 ### Ajouter le dépot nécessaire :
 ```
-# helm repo add wordpress 
+# helm repo add wordpress https://raw.githubusercontent.com/Tom4599/stage/master/wordpress-openshift/
 # helm repo update
 ```
 ### On vérifie qu'il a bien été ajouté :
