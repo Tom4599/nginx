@@ -1,3 +1,0 @@
-restartPolicy: Always
-pullPolicy: IfNotPresent
-storage: glusterfs-storage
