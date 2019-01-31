@@ -77,6 +77,7 @@ wordpress/wordpress-openshift	0.1.0        	1.0        	A Helm chart for Kuberne
 ### On déploie l'application :
  
 ```
+# export TILLER_NAMESPACE=tiller
 # helm install --namespace=wordpress --set password=<"cGFzc3dvcmQ="> --set host=<wordpress.example.com> --set storagemariadb=<5Gi> wordpress/wordpress-openshift
 ```
 Si vous déployer un deuxième wordpress dans le même namespace, vous devez spécifier les variables mariadbname et wordpressname.
