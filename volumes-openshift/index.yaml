@@ -3,11 +3,11 @@ entries:
   volumes-openshift:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T13:58:52.527916936+01:00
+    created: 2019-02-01T14:18:54.721957409+01:00
     description: A Helm chart for Kubernetes
-    digest: 7ba506a96aa8606bcfb3e1997b373f185686f8d8337c2162a97fd75dca1065bc
+    digest: 6a4d5f10c844e58de740c5cf0832d9346dff2a19f6d1954567f9c7b6b81157a2
     name: volumes-openshift
     urls:
     - volumes-openshift-0.1.0.tgz
     version: 0.1.0
-generated: 2019-02-01T13:58:52.52721227+01:00
+generated: 2019-02-01T14:18:54.721335187+01:00
