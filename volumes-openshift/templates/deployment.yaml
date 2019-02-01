@@ -1,5 +1,3 @@
----
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -11,6 +9,8 @@ spec:
    requests:
         storage: 1Gi
 storageClassName: glusterfs-storage
+
+---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,6 +24,8 @@ spec:
         storage: 1Gi
 storageClassName: glusterfs-storage
 
+---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -36,35 +38,31 @@ spec:
         storage: 1Gi
 storageClassName: glusterfs-storage
 
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
-metadata:
-  labels:
-    app: volume
-  name: volume
+---
+
+apiVersion: v1
+kind: Pod
+  name: nginx
 spec:
-  selector:
-    app: volume
-    deploymentconfig: volume
-  template:
-    metadata:
-      labels:
-        app: volume
-        deploymentconfig: volume
-    spec:
-      containers:
-          image: nginx:latest
-          imagePullPolicy: IfNotPresent
-          name: nginx
-      restartPolicy: Always
-      volumes
-        - name: volume-apache
+  containers:
+    - image: nginx
+      imagePullPolicy: Always
+      name: nginx
+      volumeMounts:
+        - mountPath: /mnt/apache
+          name: volume-apache
+        - mountPath: /mnt/nginx
+          name: volume-nginx
+        - mountPath: /mnt/varnish
+          name: volume-varnish
+  restartPolicy: Always
+  volumes:
+    - name: volume-apache
           persistentVolumeClaim: 
-            claimNam: storage-apache
+            claimName: storage-apache
         - name: volume-nginx
           persistentVolumeClaim:
-            claimNam: storage-nginx
+            claimName: storage-nginx
         - name: volume-varnish
           persistentVolumeClaim:
-            claimNam: storage-varnish
----
+            claimName: storage-varnish
