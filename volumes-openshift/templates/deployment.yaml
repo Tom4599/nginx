@@ -40,25 +40,24 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: volumes
-  name: volumes
+    app: volume
+  name: volume
 spec:
-  replicas: 1
   selector:
-    app: volumes
-    deploymentconfig: volumes
+    app: volume
+    deploymentconfig: volume
   template:
     metadata:
       labels:
-        app: volumes
-        deploymentconfig: volumes
+        app: volume
+        deploymentconfig: volume
     spec:
       containers:
           image: nginx:latest
           imagePullPolicy: IfNotPresent
           name: nginx
       restartPolicy: Always
-      volumes:
+      volumes
         - name: volume-apache
           persistentVolumeClaim: 
             claimNam: storage-apache
