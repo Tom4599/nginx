@@ -42,7 +42,7 @@ storageClassName: glusterfs-storage
 
 apiVersion: v1
 kind: Pod
-  name: nginx
+name: nginx
 spec:
   containers:
     - image: nginx
@@ -58,11 +58,11 @@ spec:
   restartPolicy: Always
   volumes:
     - name: volume-apache
-          persistentVolumeClaim: 
-            claimName: storage-apache
-        - name: volume-nginx
-          persistentVolumeClaim:
-            claimName: storage-nginx
-        - name: volume-varnish
-          persistentVolumeClaim:
-            claimName: storage-varnish
+      persistentVolumeClaim: 
+        claimName: storage-apache
+    - name: volume-nginx
+      persistentVolumeClaim:
+        claimName: storage-nginx
+    - name: volume-varnish
+      persistentVolumeClaim:
+claimName: storage-varnish
