@@ -2,7 +2,7 @@ restartPolicy: Always
 pullPolicy: IfNotPresent
 imagewordpress: library/wordpress
 host: wordpress.example.com
-storagemariadb: 5Gi
+storagemariadb: 1Gi
 storageClassName: glusterfs-storage
 accessmodesmariadb: ReadWriteOnce
 mariadbname: mariadb
