@@ -1,0 +1,221 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: storage-www
+spec:
+ accessModes:
+  - ReadOnlyMany
+ resources:
+   requests:
+        storage: 1Gi
+storageClassName: glusterfs-storage
+
+---
+
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: apache
+  name: apache
+spec:
+  replicas: 1
+  selector:
+    app: apache
+    deploymentconfig: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+        deploymentconfig: apache
+    spec:
+      containers:
+          image: webdevops/php-apache
+          imagePullPolicy: IfNotPresent
+          name: apache
+          ports:
+            - containerPort: 82
+              protocol: TCP
+            - containerPort: 9000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/html/
+              readOnly: false
+              name: volume-www
+            - mountPath: /opt/docker/etc
+              readOnly: false
+              name: volume-etc-apache
+      volumes:
+        - name: volume-etc-apache
+          persistentVolumeClaim:
+            claimName: storage-apache
+        - name: volume-www
+          persistentVolumeClaim:
+            claimName: storage-www
+      restartPolicy: Always
+      
+---
+
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    app: nginx
+    deploymentconfig: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        deploymentconfig: nginx
+    spec:
+      containers:
+          image: library/nginx
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/nginx
+              readOnly: false
+              name: volume-nginx
+      volumes:
+        - name: volume-nginx
+          persistentVolumeClaim:
+            claimName: storage-nginx
+      restartPolicy: Always
+
+---
+
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: varnish
+  name: varnish
+spec:
+  replicas: 1
+  selector:
+    app: varnish
+    deploymentconfig: varnish
+  template:
+    metadata:
+      labels:
+        app: varnish
+        deploymentconfig: varnish
+    spec:
+      containers:
+          image: jonbaldie/varnish
+          imagePullPolicy: IfNotPresent
+          name: varnish
+          ports:
+            - containerPort: 6081
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/varnish
+              readOnly: false
+              name: volume-varnish
+      volumes:
+        - name: volume-varnish
+          persistentVolumeClaim:
+            claimName: storage-varnish
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: apache
+  name: apache
+spec:
+  clusterIP: None
+  ports:
+  - name: 82-tcp
+    port: 82
+    protocol: TCP
+    targetPort: 82
+  - name: 9000-tcp
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    deploymentconfig: apache
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  host: nginx.example.com
+  port:
+    targetPort: 80-tcp
+  to:
+    kind: Service
+    name: nginx
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+      host: nginx.example.com
+      routerName: router
+wildcardPolicy: None
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  clusterIP: None
+  ports:
+  - name: 80-tcp
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    deploymentconfig: nginx
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: varnish
+  name: varnish
+spec:
+  clusterIP: None
+  ports:
+  - name: 6081-tcp
+    port: 6081
+    protocol: TCP
+    targetPort: 6081
+  selector:
+    deploymentconfig: varnish
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
