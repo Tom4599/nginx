@@ -42,7 +42,8 @@ storageClassName: glusterfs-storage
 
 apiVersion: v1
 kind: Pod
-name: nginx
+metadata:
+  name: nginx
 spec:
   containers:
     - image: nginx
@@ -65,4 +66,4 @@ spec:
         claimName: storage-nginx
     - name: volume-varnish
       persistentVolumeClaim:
-claimName: storage-varnish
+        claimName: storage-varnish
