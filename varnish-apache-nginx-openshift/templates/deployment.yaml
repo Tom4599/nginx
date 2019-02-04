@@ -2,44 +2,6 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: apache
-  name: apache
-spec:
-  replicas: 1
-  selector:
-    app: apache
-    deploymentconfig: apache
-  template:
-    metadata:
-      labels:
-        app: apache
-        deploymentconfig: apache
-    spec:
-      containers:
-          image: webdevops/php-apache
-          imagePullPolicy: IfNotPresent
-          name: apache
-          ports:
-            - containerPort: 82
-              protocol: TCP
-            - containerPort: 9000
-              protocol: TCP
-          volumeMounts:
-            - mountPath: /opt/docker/etc
-              readOnly: false
-              name: volume-etc-apache
-      volumes:
-        - name: volume-etc-apache
-          persistentVolumeClaim:
-            claimName: storage-apache
-      restartPolicy: Always
-      
----
-
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
-metadata:
-  labels:
     app: nginx
   name: nginx
 spec:

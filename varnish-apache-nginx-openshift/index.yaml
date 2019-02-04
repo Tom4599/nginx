@@ -3,11 +3,11 @@ entries:
   varnish-apache-nginx-openshift:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-04T09:23:13.838943674+01:00
+    created: 2019-02-04T09:31:44.503235606+01:00
     description: A Helm chart for Kubernetes
-    digest: d3f1ebaec175befda05eb0bc824cccf564099dcb724bc9337c904ed94d853815
+    digest: fd9a13c6e0c24d223546b844ec619ca64b7c2faf732f98049a168a3a5f8a0508
     name: varnish-apache-nginx-openshift
     urls:
     - varnish-apache-nginx-openshift-0.1.0.tgz
     version: 0.1.0
-generated: 2019-02-04T09:23:13.838362027+01:00
+generated: 2019-02-04T09:31:44.502660993+01:00
