@@ -2,6 +2,44 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
+    app: apache
+  name: apache
+spec:
+  replicas: 1
+  selector:
+    app: apache
+    deploymentconfig: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+        deploymentconfig: apache
+    spec:
+      containers:
+        - ports:
+            - containerPort: 82
+              protocol: TCP
+            - containerPort: 9000
+              protocol: TCP
+          image: webdevops/php-apache
+          imagePullPolicy: IfNotPresent
+          name: apache
+          volumeMounts:
+            - mountPath: /opt/docker/etc
+              readOnly: false
+              name: volume-etc-apache
+      volumes:
+        - name: volume-etc-apache
+          persistentVolumeClaim:
+            claimName: storage-apache
+      restartPolicy: Always
+
+---
+
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
     app: nginx
   name: nginx
 spec:
@@ -16,12 +54,12 @@ spec:
         deploymentconfig: nginx
     spec:
       containers:
+        - ports:
+            - containerPort: 80
+              protocol: TCP
           image: library/nginx
           imagePullPolicy: IfNotPresent
           name: nginx
-          ports:
-            - containerPort: 80
-              protocol: TCP
           volumeMounts:
             - mountPath: /etc/nginx
               readOnly: false
@@ -52,12 +90,12 @@ spec:
         deploymentconfig: varnish
     spec:
       containers:
+        - ports:
+            - containerPort: 6081
+              protocol: TCP
           image: jonbaldie/varnish
           imagePullPolicy: IfNotPresent
           name: varnish
-          ports:
-            - containerPort: 6081
-              protocol: TCP
           volumeMounts:
             - mountPath: /etc/varnish
               readOnly: false
