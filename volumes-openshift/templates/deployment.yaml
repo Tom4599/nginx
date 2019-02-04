@@ -7,7 +7,7 @@ spec:
   - ReadOnlyMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
 storageClassName: glusterfs-storage
 
 ---
@@ -21,7 +21,7 @@ spec:
     - ReadOnlyMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
 storageClassName: glusterfs-storage
 
 ---
@@ -35,7 +35,7 @@ spec:
     - ReadOnlyMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
 storageClassName: glusterfs-storage
 
 ---
