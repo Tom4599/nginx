@@ -1,4 +1,4 @@
-# Pour Openshift Origin
+# Pour OKD
 
 - Executer depuis le master les commandes suivantes :
 
