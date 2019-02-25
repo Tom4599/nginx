@@ -8,7 +8,7 @@ spec:
  resources:
    requests:
         storage: {{ .Values.storagemariadb }}
-storageClassName: {{ .Values.storageClassName }}
+ storageClassName: {{ .Values.storageClassName }}
 
 ---
 
