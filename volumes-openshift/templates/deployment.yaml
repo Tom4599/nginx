@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: 500Mi
-storageClassName: glusterfs-storage
+  storageClassName: glusterfs-storage
 
 ---
 
@@ -22,7 +22,7 @@ spec:
   resources:
     requests:
       storage: 500Mi
-storageClassName: glusterfs-storage
+  storageClassName: glusterfs-storage
 
 ---
 
@@ -36,7 +36,7 @@ spec:
   resources:
     requests:
       storage: 500Mi
-storageClassName: glusterfs-storage
+  storageClassName: glusterfs-storage
 
 ---
 
