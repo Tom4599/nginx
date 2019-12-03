@@ -69,7 +69,6 @@ status:
     - conditions:
       host: {{ .Values.host }}
       routerName: router
-wildcardPolicy: None
 
 ---
 
