@@ -64,7 +64,6 @@ spec:
     kind: Service
     name: {{ .Values.wordpressname }}
     weight: 100
-  wildcardPolicy: None
 status:
   ingress:
     - conditions:
